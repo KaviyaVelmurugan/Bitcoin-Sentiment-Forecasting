@@ -1,0 +1,4 @@
+numpy>=1.26,<3
+streamlit>=1.40,<2
+pandas>=2.2,<3
+vaderSentiment==3.3.2

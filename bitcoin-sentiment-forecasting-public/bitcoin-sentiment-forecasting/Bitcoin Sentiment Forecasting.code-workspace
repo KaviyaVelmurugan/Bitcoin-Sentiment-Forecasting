@@ -1,0 +1,7 @@
+{
+  "folders": [{"name": "Bitcoin Sentiment Forecasting", "path": "."}],
+  "settings": {
+    "files.exclude": {"**/__pycache__": true},
+    "search.exclude": {"work": true}
+  }
+}
