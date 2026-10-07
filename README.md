@@ -28,6 +28,24 @@ The final period contained 451 observations, 27 February 2025 to 23 May 2026. LS
 
 [Research report](docs/final-report.md) explains methodology and limits. Historical findings are separate from synthetic demo charts. Exact reproduction requires original provider archives and saved manifests excluded from the public demo.
 
+## Dashboard screenshots
+
+### Historical price overview
+![Historical price overview](docs/images/dashboard-overview.png)
+
+### Final evaluation
+![Final evaluation](docs/images/final-evaluation.png)
+
+### Earlier-period comparisons
+![Earlier-period comparisons](docs/images/earlier-period-comparison.png)
+
+### Failure analysis
+![Failure analysis](docs/images/failure-analysis.png)
+
+### Synthetic public demo
+The following image uses fictional data for interface demonstration.
+![Synthetic public demo](docs/images/synthetic-demo.png)
+
 ## Layout
 
 - `scripts/`: dashboard, collection, processing, experiments and checks.
