@@ -1,10 +1,70 @@
 # Bitcoin Sentiment Forecasting
 
-A research dashboard comparing next-day Bitcoin forecasts with persistence: tomorrow equals today. A fictional public demo runs without credentials, private files or training.
+A Bitcoin forecasting research dashboard comparing LSTM models against a simple baseline: tomorrow’s price equals today’s price.
 
-## Quick start
+The project combines forecasting experiments, sentiment processing, and analysis of prediction errors. A synthetic public demo runs without API keys or private research files.
 
-Use Python 3.13 on Windows x64. From this project folder, create an environment at a short writable path to avoid Windows long-path installation failures:
+## Research phases
+
+1. Reviewed the reference Bitcoin prediction notebook and its limitations.
+2. Prepared historical Bitcoin prices and Fear and Greed data.
+3. Compared persistence, price-only LSTM, and price-plus-sentiment LSTM.
+4. Evaluated three earlier periods using three random seeds per LSTM.
+5. Investigated forecast errors and added a recent-volatility feature.
+6. Evaluated the selected models on a reserved final period.
+7. Built the dashboard and prepared a synthetic public demo.
+
+## Final results
+
+| Model                    | MAE (USD) | RMSE (USD) | MAE improvement vs baseline |
+|--------------------------|-----------|------------|-----------------------------|
+| Persistence              | 1,488.92  | 2,062.49   | 0.00%                       |
+| Price-only LSTM          | 1,501.59  | 2,062.36   | -0.85%                      |
+| Price + volatility LSTM  | 1,514.03  | 2,074.88   | -1.69%                      |
+
+The final evaluation covered **451 daily observations**, from **27 February 2025 to 23 May 2026**. LSTM predictions were averaged across three fixed random seeds.
+
+Persistence achieved the lowest mean absolute error. The LSTM models did not consistently improve on this baseline.
+
+The sentiment model was evaluated during development but was not included in the final evaluation. Historical sentiment features used the Fear and Greed index; collected news sentiment was processed separately.
+
+These results do not establish statistical significance or trading profitability. The final period has now been inspected, so further model improvements require fresh evaluation data.
+
+## Research report
+
+Read the [research report](bitcoin-sentiment-forecasting-public/bitcoin-sentiment-forecasting/docs/final-report.md) for methodology, results, and limitations.
+
+## Dashboard screenshots
+
+### Bitcoin price overview
+
+![Bitcoin price overview](bitcoin-sentiment-forecasting-public/bitcoin-sentiment-forecasting/docs/images/dashboard%20overview.png)
+
+### Final evaluation
+
+![Final evaluation](bitcoin-sentiment-forecasting-public/bitcoin-sentiment-forecasting/docs/images/final%20evaluation.png)
+
+### Earlier-period comparisons
+
+![Earlier-period comparisons](bitcoin-sentiment-forecasting-public/bitcoin-sentiment-forecasting/docs/images/Early%20period%20comparison.png)
+
+### Forecast failure analysis
+
+![Forecast failure analysis](bitcoin-sentiment-forecasting-public/bitcoin-sentiment-forecasting/docs/images/Forecast%20failures.png)
+
+### Synthetic public demo
+
+This screenshot uses fictional data to demonstrate the interface.
+
+![Synthetic public demo](bitcoin-sentiment-forecasting-public/bitcoin-sentiment-forecasting/docs/images/Synthetic%20demo%20image.png)
+
+## Run the dashboard
+
+Open a terminal inside:
+
+`bitcoin-sentiment-forecasting-public/bitcoin-sentiment-forecasting`
+
+Create a virtual environment and install the dashboard dependencies:
 
 ```powershell
 python -m venv C:\btc-env
@@ -12,49 +72,42 @@ C:\btc-env\Scripts\python.exe -m pip install -r requirements.txt
 C:\btc-env\Scripts\python.exe -m streamlit run scripts\bitcoin_page.py
 ```
 
-Choose another short writable path if needed. On macOS/Linux use a standard virtual environment and equivalent Python commands. TensorFlow is optional for the demo; install `requirements-research.txt` only for training.
+Use another short writable environment path if needed.
 
-On a clean checkout, the page shows **Synthetic demo**. Prices, forecasts and news counts there are entirely fictional. They demonstrate the interface, not market performance. Existing local users can choose **Local research results** when their saved archive is present.
+The public version starts with synthetic data. Historical research results require the original local archives and saved experiment outputs, which are excluded from this repository.
 
-## Historical result
+TensorFlow is optional for the dashboard demo. Training requires the additional dependencies in `requirements-research.txt`.
 
-| Forecast | Final MAE (USD) | Improvement vs baseline |
-|---|---:|---:|
-| Persistence | 1,488.92 | 0.00% |
-| Price-only LSTM | 1,501.59 | -0.85% |
-| Price + volatility LSTM | 1,514.03 | -1.69% |
+## Project structure
 
-The final period contained 451 observations, 27 February 2025 to 23 May 2026. LSTM forecasts average three fixed seeds. Persistence achieved the lowest final MAE. No statistical significance, live forecasting or trading-profit claim is made. The final period is now inspected: future changes require new evaluation data.
+Project files are inside `bitcoin-sentiment-forecasting-public/bitcoin-sentiment-forecasting/`.
 
-[Research report](docs/final-report.md) explains methodology and limits. Historical findings are separate from synthetic demo charts. Exact reproduction requires original provider archives and saved manifests excluded from the public demo.
+- `scripts/` — dashboard, data processing, experiments, and checks.
+- `src/cryptopulse/` — reused sentiment processing modules.
+- `docs/` — research report, setup instructions, and screenshots.
+- `work/` — ignored local research data and model outputs.
 
-## Dashboard screenshots
+## Limitations
 
-### Historical price overview
-![Historical price overview](docs/images/dashboard-overview.png)
+- Historical results do not demonstrate current forecasting ability.
+- Performance varied across evaluation periods and random seeds.
+- The models often predicted smaller movements than the market experienced.
+- Historical sentiment availability and revisions cannot be fully verified.
+- News sentiment scores describe language and do not establish future returns.
+- The synthetic demo does not represent real market performance.
+- Exact reproduction requires provider archives and saved research manifests.
+- No trading strategy with fees and execution costs was evaluated.
 
-### Final evaluation
-![Final evaluation](docs/images/final-evaluation.png)
+## References
 
-### Earlier-period comparisons
-![Earlier-period comparisons](docs/images/earlier-period-comparison.png)
+- [Reference Bitcoin prediction notebook](https://github.com/silvainfm/FinTech-Projects/blob/main/Stock%20Predictor/lstm_stock_predictor_fng.ipynb)
+- [CryptoPulse AI](https://github.com/KaviyaVelmurugan/cryptopulse-ai) — sentiment processing reference.
+- [SignalGuard](https://github.com/KaviyaVelmurugan/SignalGuard) — evaluation and failure-analysis reference.
 
-### Failure analysis
-![Failure analysis](docs/images/failure-analysis.png)
+## License
 
-### Synthetic public demo
-The following image uses fictional data for interface demonstration.
-![Synthetic public demo](docs/images/synthetic-demo.png)
+Project software is released under the [MIT License](LICENSE).
 
-## Layout
+Reused components retain their original license notices. Provider data has separate terms; the MIT License does not grant permission to redistribute external datasets.
 
-- `scripts/`: dashboard, collection, processing, experiments and checks.
-- `src/cryptopulse/`: reused sentiment modules with their original MIT notice.
-- `docs/`: setup, final report and publication notes.
-- `work/`: private local archives, news, models and results, ignored by Git.
-
-## References and license
-
-[Reference notebook](https://github.com/silvainfm/FinTech-Projects/blob/main/Stock%20Predictor/lstm_stock_predictor_fng.ipynb) inspired the experiment. [CryptoPulse AI](https://github.com/KaviyaVelmurugan/cryptopulse-ai) supplies sentiment code; [SignalGuard](https://github.com/KaviyaVelmurugan/SignalGuard) informs evaluation and failure analysis. News was not used in the historical forecasting models.
-
-Software is [MIT licensed](LICENSE). Provider datasets retain separate licenses; MIT does not grant rights to redistribute them. See [attribution](DATA_AND_ATTRIBUTION.md) and [setup](docs/SETUP.md). Manual news collection remains subject to provider and publisher permissions; do not upload keys or private news.
+See [data and attribution](bitcoin-sentiment-forecasting-public/bitcoin-sentiment-forecasting/DATA_AND_ATTRIBUTION.md) and [setup instructions](bitcoin-sentiment-forecasting-public/bitcoin-sentiment-forecasting/docs/SETUP.md).
